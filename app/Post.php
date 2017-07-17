@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-//use GrahamCampbell\Markdown\Facades\Markdown;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 class Post extends Model
 {
@@ -100,6 +100,10 @@ class Post extends Model
             $x='<span class="label label-success"><small>Published</small></span>';
         }
         return $x;
+    }
+    
+    public function textg(){
+        ;
     }
     
 }
