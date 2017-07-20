@@ -8,11 +8,12 @@ use Carbon\Carbon;
 
 class Post extends Model
 {
-    protected $fillable=['view_count'];
+    protected $fillable = ['title', 'slug', 'excerpt', 'body', 'published_at', 'category_id', 'image'];
+    //protected $fillable=['view_count'];
     //protected $dates=['published_at'];
     public function author()
     {
-        return $this->belongsTo('App\User','author_id','id');
+        return $this->belongsTo('App\User');
     }
     public function category()
     {
