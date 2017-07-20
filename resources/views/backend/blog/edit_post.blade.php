@@ -17,7 +17,12 @@
 
     <!-- Main content -->
     <section class="content">
-        {!! Form::open(["url"=>"backend/blog/{$post->id}","method"=>"patch","id"=>"post-form","files"=>"true"]) !!}
+       {!! Form::model($post, [
+                  'method' => 'PUT',
+                  'route'  => ['backend.blog.update', $post->id],
+                  'files'  => TRUE,
+                  'id' => 'post-form'
+              ]) !!}
         <div class="row">
          
          @include('backend.includes.form')       

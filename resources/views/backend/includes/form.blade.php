@@ -5,7 +5,7 @@
                     
                     <div class="form-group {{$errors->has('title')?'has-error':''}}">
                     {!! Form::label('title','Title')!!}
-                    {!! Form::text('title',isset($post->title)?$post->title:null,['class'=>'form-control']) !!}
+                    {!! Form::text('title',null,['class'=>'form-control']) !!}
                     @if($errors->has('title'))
                     <span class="help-block">{{$errors->first('title')}}</span>
                     @endif
@@ -14,7 +14,7 @@
                     
                     <div class="form-group {{$errors->has('slug')?'has-error':''}}">
                     {!! Form::label('slug','Slug')!!}
-                    {!! Form::text('slug',isset($post->slug)?$post->slug:null,['class'=>'form-control']) !!}
+                    {!! Form::text('slug',null,['class'=>'form-control']) !!}
                     @if($errors->has('slug'))
                     <span class="help-block">{{$errors->first('slug')}}</span>
                     @endif
@@ -22,7 +22,7 @@
                     
                     <div class="form-group {{$errors->has('excerpt')?'has-error':''}}">
                     {!! Form::label('excerpt','Excerpt')!!}
-                    {!! Form::textarea('excerpt',isset($post->excerpt)?$post->excerpt:null,['class'=>'form-control']) !!}
+                    {!! Form::textarea('excerpt',null,['class'=>'form-control']) !!}
                     @if($errors->has('excerpt'))
                     <span class="help-block">{{$errors->first('excerpt')}}</span>
                     @endif
@@ -30,7 +30,7 @@
                   
                     <div class="form-group {{$errors->has('body')?'has-error':''}}">
                     {!! Form::label('body','Body')!!}
-                    {!! Form::textarea('body',isset($post->body)?$post->body:null,['class'=>'form-control']) !!}
+                    {!! Form::textarea('body',null,['class'=>'form-control']) !!}
                     @if($errors->has('body'))
                     <span class="help-block">{{$errors->first('body')}}</span>
                     @endif
@@ -56,7 +56,7 @@
                         <div class="form-group {{$errors->has('published_at')?'has-error':''}}">
                             {!! Form::label('published_at','Publish date')!!}
                             <div class='input-group date' id='datetimepicker1'>
-                                {!! Form::text('published_at',isset($post->published_at)?$post->published_at:null,['class'=>'form-control','placeholder'=>'Y-m-d H:i:s']) !!}
+                                {!! Form::text('published_at',null,['class'=>'form-control','placeholder'=>'Y-m-d H:i:s']) !!}
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>

@@ -37,17 +37,10 @@ class BlogController extends BackendController
      */
     public function create(Post $post)
     {
-      // \DB::enableQuerylog();
+        //$post= new Post();
        return view('backend.blog.add_post',compact('post'));
-        //dd(\DB::getQueryLog());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
    /* public function store(Postrequest $request)
     {
       
@@ -79,8 +72,11 @@ class BlogController extends BackendController
         $data = $this->uploadImage($request);
 
         $request->user()->posts()->create($data);
+        
+        session()->push('m','success');
+        session()->push('m','The post has created successfully');
 
-        return redirect('/backend/blog')->with('message', 'Your post was created successfully!');
+        return redirect('/backend/blog');
     }
     
     public function uploadImage($request)
