@@ -61,7 +61,18 @@
 
 <!-- jasny boostrap for upload image -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
-
+<!-- for CKeditor-->
+<!-- Ckeditor plugin-->
+ <script src="/backend/ckeditor/ckeditor.js"></script>
+<script language='javascript'> 
+          CKEDITOR.replace( 'excerpt',{
+              height:200
+          } );
+          
+          CKEDITOR.replace( 'body' ,{
+              height:300
+          });
+</script>
 <!-- AdminLTE App -->
 <script src="/backend/js/app.min.js"></script>
 @yield('script')

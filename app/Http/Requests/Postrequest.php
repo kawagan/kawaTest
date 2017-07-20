@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-
+use App\Post;
 class Postrequest extends Request
 {
     /**
@@ -23,12 +23,22 @@ class Postrequest extends Request
      */
     public function rules()
     {
-        return [
-             'title'=>'required',
-             'slug'=>'required|unique:posts',
-             'excerpt'=>'required',
-             'body'=>'required',
-             'published_at'=>'date_format:Y-m-d H:i:s'
+         $rules = [
+            'title'        => 'required',
+            'slug'         => 'required|unique:posts,slug',
+            'body'         => 'required',
+            'published_at' => 'date_format:Y-m-d H:i:s',
+            'category_id'  => 'required',
+            'image'        => 'mimes:jpg,jpeg,bmp,png',
         ];
+
+        switch($this->method()) {
+            case 'PUT':
+            case 'PATCH':
+                $rules['slug'] = 'required|unique:posts,slug,' . $this->route('blog');
+                break;
+        }
+        return $rules;
+        
     }
 }

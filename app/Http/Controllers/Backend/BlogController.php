@@ -35,9 +35,11 @@ class BlogController extends BackendController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Post $post)
     {
-        return view('backend.blog.add_post');
+      // \DB::enableQuerylog();
+       return view('backend.blog.add_post',compact('post'));
+        //dd(\DB::getQueryLog());
     }
 
     /**
@@ -46,7 +48,7 @@ class BlogController extends BackendController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Postrequest $request)
+   /* public function store(Postrequest $request)
     {
       
          $dataFile=$this->uploadImage($request);
@@ -70,12 +72,21 @@ class BlogController extends BackendController
 
          return redirect('/backend/blog/');
  
+    }*/
+    
+    public function store(Postrequest $request)
+    {
+        $data = $this->uploadImage($request);
+
+        $request->user()->posts()->create($data);
+
+        return redirect('/backend/blog')->with('message', 'Your post was created successfully!');
     }
     
     public function uploadImage($request)
     {
       
-      //$data=$request->all();
+      $data=$request->all();
       $fileName=NULL;
       if($request->hasFile('image')){
           $image=$request->file('image');
@@ -91,10 +102,10 @@ class BlogController extends BackendController
                      resize($width, $height)->
                      save($this->destination."/".$thumbnail);
           }
-          //$data['image']=$fileName;
+          $data['image']=$fileName;
       }
           
-    return $fileName;  
+    return $data;  
     }
 
     public function show($id)
@@ -110,7 +121,8 @@ class BlogController extends BackendController
      */
     public function edit($id)
     {
-        dd('edit');
+        $post=Post::findOrFail($id);
+        return view("backend.blog.edit_post",compact('post'));
     }
 
     /**
@@ -120,7 +132,7 @@ class BlogController extends BackendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Postrequest $request, $id)
     {
         dd('update');
     }
