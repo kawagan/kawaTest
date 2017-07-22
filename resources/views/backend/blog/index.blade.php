@@ -36,7 +36,7 @@
                     <table class="table table-bordered">
                     <thead >
                         <tr >
-                            <th width='70'>Action</th>
+                            <th >Action</th> 
                             <th>Title</th>
                             <th width='100'>Author</th>
                             <th width='160'>Category</th>
@@ -46,14 +46,39 @@
                     <tbody>
                         @foreach($posts as $post)
                         <tr>
-                            <td>
-                                <a href="{{route('backend.blog.edit',$post->id)}}" class="btn btn-xs btn-default">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a href="{{route('backend.blog.destroy',$post->id)}}" class="btn btn-xs btn-danger">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </td>
+                            <td width="{{$post->trashed()?'210':''}}">
+                                <table class="table no-border no-padding">
+                                    <tr>
+                                        <td>
+                                            <a href="{{route('backend.blog.edit',$post->id)}}" class="btn btn-xs btn-default">
+                                               <i class="fa fa-edit"></i>
+                                            </a> 
+                                        </td>
+                                        
+                                        @if($post->trashed())
+                                        <td >
+                                        {!! Form::open(["route"=>['deleteForEver',$post->id],"method"=>"post"]) !!}
+                                        <button type="submit" class=" btn btn-xs btn-danger">Delete for ever</button>
+                                        {!! Form::close() !!}
+                                        </td>
+                                        <td>
+                                        {!! Form::open(["url"=>"/backend/blog/restore/{$post->id}","method"=>"post"]) !!}
+                                        <button type="submit" class=" btn btn-xs btn-info">Restore</button>
+                                        {!! Form::close() !!}
+                                        </td>
+                                        @else
+                                        <td class="align-left">
+                                        {!! Form::open(["url"=>"/backend/blog/$post->id","method"=>"delete"]) !!}
+                                        <button type="submit" class=" btn btn-xs btn-danger">Delete</i></button>
+                                        {!! Form::close() !!}
+                                        @endif
+                                        </td>
+                                    </tr>
+                                
+                            
+                            
+                                
+                                </table>
                             <td>{{$post->title}}</td>
                             <td>{{$post->author->name}}</td>
                             <td>{{$post->category->title}}</td>

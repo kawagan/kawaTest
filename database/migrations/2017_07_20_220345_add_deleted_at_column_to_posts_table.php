@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterUsersAddBioColumn extends Migration
+class AddDeletedAtColumnToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AlterUsersAddBioColumn extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('posts', function (Blueprint $table) {
+            $table->timestamp('deleted_at');
         });
     }
 
@@ -24,8 +24,8 @@ class AlterUsersAddBioColumn extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('created_at');
         });
     }
 }

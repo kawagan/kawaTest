@@ -38,3 +38,13 @@ Route::auth();
 Route::get('/home', 'backend\HomeController@index');
 
 Route::resource('/backend/blog','backend\BlogController');
+
+Route::post('/backend/blog/delete-for-ever/{id}',[
+    'uses'=>'backend\BlogController@deleteForEver',
+    'as'=>'deleteForEver'
+]);
+
+Route::post('/backend/blog/restore/{id}',[
+    'uses'=>'backend\blogController@restore',
+    'as'=>'restore'
+]);

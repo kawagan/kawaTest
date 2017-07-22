@@ -101,8 +101,8 @@
                    
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                @if(isset($post->image_thumb_url))
-                                <img src="{{$post->image_thumb_url}}">
+                                @if(isset($post->image_thum_url))
+                                <img src="{{$post->image_thum_url}}">
                                 @else
                                 <img src="http://via.placeholder.com/200x150">
                                 @endif

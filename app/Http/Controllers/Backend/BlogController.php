@@ -10,7 +10,7 @@ use Intervention\Image\Facades\Image;
 
 class BlogController extends BackendController
 {
-    protected $limit=3;
+    protected $limit=8;
     protected $destination;
     
     public function __construct() {
@@ -24,7 +24,7 @@ class BlogController extends BackendController
      */
     public function index()
     {
-        $posts=Post::with('author','category')->
+        $posts=Post::withTrashed('author','category')->
                       latestFirst()->
                       paginate($this->limit);
         return view('backend.blog.index',compact('posts'));
@@ -69,7 +69,7 @@ class BlogController extends BackendController
     
     public function store(Postrequest $request)
     {
-        $data = $this->uploadImage($request);
+        $data = $this->handleImage($request);
 
         $request->user()->posts()->create($data);
         
@@ -79,7 +79,7 @@ class BlogController extends BackendController
         return redirect('/backend/blog');
     }
     
-    public function uploadImage($request)
+    public function handleImage($request)
     {
       
       $data=$request->all();
@@ -130,7 +130,13 @@ class BlogController extends BackendController
      */
     public function update(Postrequest $request, $id)
     {
-        dd('update');
+        $data=$this->handleImage($request);
+        $post=Post::findOrFail($id);
+        $post->update($data);
+        
+        session()->push('m','success');
+        session()->push('m','The post has updated successfully');
+        return redirect('/backend/blog');
     }
 
     /**
@@ -141,6 +147,32 @@ class BlogController extends BackendController
      */
     public function destroy($id)
     {
-        dd('delete');
+        $post=Post::findOrFail($id)->delete();
+        
+        session()->push('m','success');
+        session()->push('m','The post has Trashed successfully');
+        return redirect()->back();
     }
+    
+    public function deleteForEver($id)
+    {
+        $post=Post::onlyTrashed()->findOrFail($id)->forceDelete();
+        
+        session()->push('m','success');
+        session()->push('m','The post has Trashed successfully');
+        
+        return redirect()->back();
+    }
+    
+    public function restore($id)
+    {
+        
+        $post=Post::onlyTrashed()->findOrFail($id)->restore();
+        
+        session()->push('m','success');
+        session()->push('m','The post has restore successfully');
+        return redirect()->back();
+
+    }
+    
 }

@@ -1,13 +1,14 @@
 <?php
 
 namespace App;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 //use GrahamCampbell\Markdown\Facades\Markdown;
 
 class Post extends Model
 {
+    use SoftDeletes;
     protected $fillable = ['title', 'slug', 'excerpt', 'body', 'published_at', 'category_id', 'image'];
     //protected $fillable=['view_count'];
     //protected $dates=['published_at'];
@@ -52,18 +53,18 @@ class Post extends Model
        
     }
     
-    public function getImageThumbUrlAttribute($value)
+    public function getImageThumUrlAttribute($value)
     {
         $imageUrl = "";
 
         if ( ! is_null($this->image))
         {
             $ext       = substr(strrchr($this->image, '.'), 1);
-            $thumbnail = str_replace(".{$ext}", "_thumb.{$ext}", $this->image);
-            $imagePath = public_path() . "/img/" . $thumbnail;
+            $thumbnail = str_replace(".{$ext}", "_thum.{$ext}", $this->image);
+            $imagePath = public_path() . '/img/' . $thumbnail;
             if (file_exists($imagePath)) $imageUrl = asset("img/" . $thumbnail);
         }
-
+ //dd($imagePath);
         return $imageUrl;
     }
     
