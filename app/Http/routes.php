@@ -48,3 +48,7 @@ Route::post('/backend/blog/restore/{id}',[
     'uses'=>'backend\blogController@restore',
     'as'=>'restore'
 ]);
+
+// --- Category -------
+
+Route::resource('backend/category','backend\CategoryController');

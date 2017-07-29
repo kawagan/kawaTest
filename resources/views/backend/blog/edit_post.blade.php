@@ -25,7 +25,7 @@
               ]) !!}
         <div class="row">
          
-         @include('backend.includes.form')       
+         @include('backend.blog.includes.form')       
             </div>
         {!! Form::close() !!}    
         </div>
@@ -36,5 +36,5 @@
  @endsection
  
  @section('script')
- @include('backend.includes.script_form')
+ @include('backend.blog.includes.script_form')
  @endsection

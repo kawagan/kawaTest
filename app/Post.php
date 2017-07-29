@@ -60,13 +60,14 @@ class Post extends Model
         if ( ! is_null($this->image))
         {
             $ext       = substr(strrchr($this->image, '.'), 1);
-            $thumbnail = str_replace(".{$ext}", "_thum.{$ext}", $this->image);
+            $thumbnail = str_replace(".{$ext}", "_thumb.{$ext}", $this->image);
             $imagePath = public_path() . '/img/' . $thumbnail;
             if (file_exists($imagePath)) $imageUrl = asset("img/" . $thumbnail);
         }
- //dd($imagePath);
         return $imageUrl;
     }
+    
+    
     
     public function scopeLatestFirst($query)
     {
@@ -80,6 +81,16 @@ class Post extends Model
     public function scopePublished($query)
     {
         return $query->where('published_at','<=',Carbon::now());
+    }
+    
+    public function scopeSchedule($query)
+    {
+        return $query->where('published_at','>',Carbon::now());
+    }
+    
+    public function scopeDraft($query)
+    {
+        return $query->where('published_at','=',NULL);
     }
     
     public function formularDate($value=false)

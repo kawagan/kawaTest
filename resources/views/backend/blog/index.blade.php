@@ -23,6 +23,18 @@
                     <div class="pull-left">
                         <a href="{{route('backend.blog.create')}}" class="btn btn-success">Add Post</a>
                     </div>
+                    
+                    <div class="pull-right" style="padding-top: 10px;">
+                        <?php $links=[]; ?>
+                        @foreach($statusList as $key=>$value)
+                            <?php $selected=(Request::get('status')==$key)?'selected':'';?>
+                            <?php $links[]="<a href='?status=$key' class='$selected'>$key($value)</a>"; ?>
+                        @endforeach
+                        
+                        {!! implode(' | ',$links) !!}
+                        
+              
+                    </div>
                    
                     
                 </div>
@@ -36,7 +48,7 @@
                     <table class="table table-bordered">
                     <thead >
                         <tr >
-                            <th >Action</th> 
+                            <th width="100" >Action</th> 
                             <th>Title</th>
                             <th width='100'>Author</th>
                             <th width='160'>Category</th>
@@ -46,39 +58,31 @@
                     <tbody>
                         @foreach($posts as $post)
                         <tr>
-                            <td width="{{$post->trashed()?'210':''}}">
-                                <table class="table no-border no-padding">
-                                    <tr>
-                                        <td>
-                                            <a href="{{route('backend.blog.edit',$post->id)}}" class="btn btn-xs btn-default">
-                                               <i class="fa fa-edit"></i>
-                                            </a> 
-                                        </td>
-                                        
-                                        @if($post->trashed())
-                                        <td >
-                                        {!! Form::open(["route"=>['deleteForEver',$post->id],"method"=>"post"]) !!}
-                                        <button type="submit" class=" btn btn-xs btn-danger">Delete for ever</button>
-                                        {!! Form::close() !!}
-                                        </td>
-                                        <td>
-                                        {!! Form::open(["url"=>"/backend/blog/restore/{$post->id}","method"=>"post"]) !!}
-                                        <button type="submit" class=" btn btn-xs btn-info">Restore</button>
-                                        {!! Form::close() !!}
-                                        </td>
-                                        @else
-                                        <td class="align-left">
-                                        {!! Form::open(["url"=>"/backend/blog/$post->id","method"=>"delete"]) !!}
-                                        <button type="submit" class=" btn btn-xs btn-danger">Delete</i></button>
-                                        {!! Form::close() !!}
-                                        @endif
-                                        </td>
-                                    </tr>
+                            <td width="{{$post->trashed()?'190':''}}">
                                 
-                            
-                            
+                                @if(!$post->trashed())            
+                                    <a href="{{route('backend.blog.edit',$post->id)}}" class="btn btn-xs btn-default">
+                                       <i class="fa fa-edit"></i>
+                                    </a>
+                                     {!! Form::open(["url"=>"/backend/blog/$post->id","method"=>"delete","style"=>"display:inline-block;"]) !!}
+                                        <button type="submit" class=" btn btn-xs btn-danger">Delete</button>
+                                     {!! Form::close() !!}
+                                @else
+
+                                    {!! Form::open(["route"=>['deleteForEver',$post->id],"method"=>"post","style"=>"display:inline-block;"]) !!}
+                                    <button type="submit" onclick="return confirm('are you sure delete permenant');" class=" btn btn-xs btn-danger">Delete for ever</button>
+                                    {!! Form::close() !!}
+
+
+                                    {!! Form::open(["url"=>"/backend/blog/restore/{$post->id}","method"=>"post","style"=>"display:inline-block;"]) !!}
+                                    <button type="submit" class=" btn btn-xs btn-info">Restore</button>
+                                    {!! Form::close() !!}
+
+                                   
                                 
-                                </table>
+                                @endif
+                            </td> 
+                                
                             <td>{{$post->title}}</td>
                             <td>{{$post->author->name}}</td>
                             <td>{{$post->category->title}}</td>
@@ -95,10 +99,16 @@
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
                     <div class="pull-left">
-                            {{$posts->render()}}
+                        <!-- when i click link 'trashed' then pagination give me 'all'also
+                         for that i add 'appends(Request::query()' to give me only trashed posts in all pagination -->
+                            
+                        {{$posts->appends(Request::query())->render()}}
                     </div>        
                     <div class="pull-right">
-                        <?php $postCount=$post->count() ?>
+                        <?php 
+                        //$postCount=$posts->count());// number of posts per page
+                        $postCount=$postCount 
+                        ?>
                         <small> {{ $postCount}}  {{str_plural('Item',$postCount)}}</small>
                     </div>
                     </nav>
