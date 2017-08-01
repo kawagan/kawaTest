@@ -1,16 +1,16 @@
 @extends('backend.layouts.master')
 @section('content')
-@section('title','Blog|Category')
+@section('title','Blog|User')
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Blog<small>Display all blog categories</small>
+         Blog<small>Display all blog users</small>
       </h1>
       <ol class="breadcrumb">
           <li ><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li><a href="{{route('blog.index')}}">Blog</a></li>
-        <li class="active">All categories</li>
+        <li class="active">All users</li>
       </ol>
     </section>
 
@@ -21,7 +21,7 @@
             <div class="box">
                 <div class="box-header">
                     <div class="pull-left">
-                        <a href="{{route('backend.category.create')}}" class="btn btn-success">Add Category</a>
+                        <a href="{{route('backend.user.create')}}" class="btn btn-success">Add User</a>
                     </div>
                     
                  
@@ -39,30 +39,34 @@
                     <thead >
                         <tr >
                             <th width="100" >Action</th> 
-                            <th>Title</th>
-                            <th width='200'>Slug</th>
+                            <th>Name</th>
+                            <th width='200'>email</th>
+                            <th width='200'>Roll</th>
                             <th width='100'>Posts</th>
                            
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($categories as $category)
+                        @foreach($users as $user)
                         <tr>
-                            <td >
-                                
-                                         
-                                    <a href="{{route('backend.category.edit',$category->id)}}" class="btn btn-xs btn-default">
-                                       <i class="fa fa-edit"></i>
-                                    </a>
-                                     {!! Form::open(["url"=>"/backend/category/$category->id","method"=>"delete","style"=>"display:inline-block;"]) !!}
-                                        <button type="submit" onclick="return confirm('are sure delete category <?php echo $category->title ?>');" class=" btn btn-xs btn-danger">Delete</button>
-                                     {!! Form::close() !!}
-                                
+                            <td >        
+                                <a href="{{route('backend.user.edit',$user->id)}}" class="btn btn-xs btn-default">
+                                   <i class="fa fa-edit"></i>
+                                </a>
+                                @if($user->posts->count()>0 && $user->id != auth()->user()->id && $user->id!=config('blog_cms.admin_id') )
+                                    <a href="{{route('user.confirm',$user->id)}}" class="btn btn-xs btn-danger">Delete</a> 
+                                @else
+                                    {!! Form::open(["url"=>"backend/user/$user->id","method"=>"delete","style"=>"display:inline-block"]) !!}
+                                    {!! Form::hidden("noPosts",true)!!}
+                                    {!! Form::submit('Delete',['class'=>'btn btn-xs btn-danger']) !!}
+                                    {!! Form::close() !!}
+                                @endif
                             </td> 
                                 
-                            <td>{{$category->title}}</td>
-                            <td>{{$category->slug}}</td>
-                            <td>{{$category->posts->count()}}</td>
+                            <td>{{$user->name}} <span class="label label-primary">{{($user->id==$currentUser)?' current user':''}}</span></td>
+                            <td>{{$user->email}}</td>
+                            <td>-</td>
+                            <td>{{$user->posts->count()}}</td>
                            
                         </tr>
                         @endforeach
@@ -76,10 +80,10 @@
                         <!-- when i click link 'trashed' then pagination give me 'all'also
                          for that i add 'appends(Request::query()' to give me only trashed posts in all pagination -->
                             
-                        {{$categories->appends(Request::query())->render()}}
+                        {{$users->appends(Request::query())->render()}}
                     </div>        
                     <div class="pull-right">
-                        <small> {{ $categoryCount}}  {{str_plural('Item',$categoryCount)}}</small>
+                        <small> {{ $userCount}}  {{str_plural('Item',$userCount)}}</small>
                     </div>
                     </nav>
                    

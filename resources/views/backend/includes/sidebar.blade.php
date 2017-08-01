@@ -33,6 +33,7 @@
           </ul>
         </li>
         <li><a href="/backend/category"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
+        <li><a href="/backend/user"><i class="fa fa-user"></i> <span>Users</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

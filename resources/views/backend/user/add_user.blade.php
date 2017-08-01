@@ -1,31 +1,26 @@
 @extends('backend.layouts.master')
-@section('title','Edit Post')
+@section('title','Add User')
 @section('content')
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Blog<small>Edit Post</small>
+         User<small>Add User</small>
       </h1>
       <ol class="breadcrumb">
           <li ><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="/backend/blog">Blog</a></li>
-        <li class="active">Edit post</li>
+        <li><a href="/backend/user">users</a></li>
+        <li class="active">Add User</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-       {!! Form::model($post, [
-                  'method' => 'PUT',
-                  'route'  => ['backend.blog.update', $post->id],
-                  'files'  => TRUE,
-                  'id' => 'post-form'
-              ]) !!}
+        {!! Form::open(["url"=>"backend/user"]) !!}
         <div class="row">
          
-         @include('backend.includes.form')       
+         @include('backend.user.includes.form')       
             </div>
         {!! Form::close() !!}    
         </div>
@@ -35,6 +30,3 @@
   </div>
  @endsection
  
- @section('script')
- @include('backend.includes.script_form')
- @endsection

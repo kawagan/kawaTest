@@ -9,5 +9,6 @@ return[
         ]
     ],
     
-    'uncategorized_id'=>12,
+    'uncategorized_id'=>12, // when delete category conating posts ,then all posts modve it to uncategorized_id 
+    'admin_id'=>11,  // when delete user conating posts ,then all posts modve it to admin_id 
 ];

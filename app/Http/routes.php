@@ -52,3 +52,11 @@ Route::post('/backend/blog/restore/{id}',[
 // --- Category -------
 
 Route::resource('backend/category','backend\CategoryController');
+
+// --- User -------
+Route::resource('backend/user','backend\userController');
+
+Route::get('/backend/user/confirm/{id}',[
+    'uses'=>'backend\UserController@confirm',
+    'as'=>'user.confirm'
+]);

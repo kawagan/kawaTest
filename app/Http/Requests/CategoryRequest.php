@@ -25,14 +25,16 @@ class Categoryrequest extends Request
     {
 
         $rules= [
-            "title"=>"required",
-            "slug"=>"required|unique:categories,slug"
+            "title"=>"required|unique:categories,title",
+            "slug"=>"required|unique:categories,slug|unique:categories"
         ];
        
         switch ($this->method()){
             case "PUT":
             case "PACTCH":
                 $rules['slug']="required|unique:categories,slug,id";
+                //or 
+                //$rules['slug']="required|unique:categories,slug,".$this->route('category');
                 break;
         };
         

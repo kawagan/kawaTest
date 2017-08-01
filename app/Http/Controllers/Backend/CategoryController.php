@@ -31,7 +31,7 @@ class CategoryController extends BackendController
     }
 
    
-    public function store(Requests\Categoryrequest $request)
+    public function store(Requests\CategoryRequest $request)
     {
         Category::create($request->all());
       
