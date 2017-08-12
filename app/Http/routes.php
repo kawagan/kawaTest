@@ -54,7 +54,7 @@ Route::post('/backend/blog/restore/{id}',[
 Route::resource('backend/category','backend\CategoryController');
 
 // --- User -------
-Route::resource('backend/user','backend\userController');
+Route::resource('backend/user','backend\UserController');
 
 Route::get('/backend/user/confirm/{id}',[
     'uses'=>'backend\UserController@confirm',

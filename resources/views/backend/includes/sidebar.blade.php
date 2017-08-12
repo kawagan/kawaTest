@@ -32,8 +32,12 @@
             <li><a href="/backend/blog/create"><i class="fa fa-circle-o"></i> Add New</a></li>
           </ul>
         </li>
+        @role(['admin','editor'])
         <li><a href="/backend/category"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
+        @endrole
+        @role('admin')
         <li><a href="/backend/user"><i class="fa fa-user"></i> <span>Users</span></a></li>
+        @endrole
       </ul>
     </section>
     <!-- /.sidebar -->
