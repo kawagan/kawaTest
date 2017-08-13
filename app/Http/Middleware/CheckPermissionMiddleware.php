@@ -3,19 +3,31 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Post;
 
 class CheckPermissionMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
+    
+    
     public function handle($request, Closure $next)
     {
+        // we have made "Helbers/permissions.php" and we put function"check_user_permissions" in it
+        // to deactive edit and delete button for users and we move it function there
+        // and then we have put "files":["App/Helpers/permissions.php"]  in composer.json
+        // and we run the command: composer dump-autoload
+        
+        if( !check_user_permissions($request))
+            abort(403,"Forbidden access!");
+        
+        
+       return $next($request);  
+    }
+    
+    /*
+    public function handle($request, Closure $next)
+    {
+        // we have made "Helbers/permissions.php" and we put function"check_user_permissions" in it
+        // to deactive edit and delete button for users and we move it function there
+        
         $currentMethodeName=$request->route()->getActionName();
         list($controller,$method)=  explode('@', $currentMethodeName);
         $controller=str_replace(['App\\Http\\Controllers\\backend\\','Controller'],'',$controller);
@@ -33,6 +45,7 @@ class CheckPermissionMiddleware
         $currenrUser=$request->user(); 
         foreach($permissions as $permission=>$methods){
             
+            // for example class "Home " not conatin to "$className"
             if(isset($className[$controller])){
                 
                 if(!$currenrUser->can("{$permission}-$className[$controller]")){
@@ -40,7 +53,8 @@ class CheckPermissionMiddleware
                 }
             
                 if(in_array($method, $methods)){
-
+                    
+                    // get current id and we will see if he has permission in other user
                     if(($id=$request->route('blog')) && !($currenrUser->can(['update-others-post','delete-others-post'])) ){
 
                         $post=Post::findOrFail($id);
@@ -50,6 +64,8 @@ class CheckPermissionMiddleware
                         }
 
                     }
+                    
+                    break;
 
                 }
             }
@@ -61,4 +77,5 @@ class CheckPermissionMiddleware
         
         return $next($request);
     }
+     */
 }

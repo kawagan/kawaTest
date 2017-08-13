@@ -60,12 +60,14 @@
                         <tr>
                             <td width="{{$post->trashed()?'190':''}}">
                                 
-                                @if(!$post->trashed())            
-                                    <a href="{{route('backend.blog.edit',$post->id)}}" class="btn btn-xs btn-default">
+                                @if(!$post->trashed())
+                                    
+                                    <!-- check_user_permissions() is middleware-->
+                                    <a href="{{route('backend.blog.edit',$post->id)}}" class="btn btn-xs btn-default {{!check_user_permissions(request(),$post->id)?'disabled':''}}" >
                                        <i class="fa fa-edit"></i>
                                     </a>
                                      {!! Form::open(["url"=>"/backend/blog/$post->id","method"=>"delete","style"=>"display:inline-block;"]) !!}
-                                        <button type="submit" class=" btn btn-xs btn-danger">Delete</button>
+                                        <button type="submit" class=" btn btn-xs btn-danger {{!check_user_permissions(request(),$post->id)?'disabled':''}}">Delete</button>
                                      {!! Form::close() !!}
                                 @else
 

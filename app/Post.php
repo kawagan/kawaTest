@@ -93,6 +93,11 @@ class Post extends Model
         return $query->where('published_at','=',NULL);
     }
     
+    public function scopeOwn($query)
+    {
+        return $query->where('author_id',auth()->user()->id);
+    }
+    
     public function formularDate($value=false)
     {
         $date='d/m/Y';

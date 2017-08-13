@@ -49,6 +49,13 @@ class BlogController extends BackendController
                       paginate($this->limit); 
             $postCount=$posts->count();
            
+        
+         }else if($status && $status=="own"){
+            $posts=Post::withTrashed('author','category')->
+                      latestFirst()->
+                      Own()->
+                      paginate($this->limit); 
+            $postCount=$posts->count();    
         }else{
             
             $posts=Post::withTrashed('author','category')->
@@ -57,7 +64,7 @@ class BlogController extends BackendController
             $postCount=$posts->count();
         }
 
-        $statusList=$this->statusList();
+        $statusList=$this->statusList($request);
         
         return view('backend.blog.index',compact('posts','statusList','postCount'));
     }
@@ -216,9 +223,10 @@ class BlogController extends BackendController
   
     }
     
-    private function statusList()
+    private function statusList($request)
     {
         return[
+            'own'=>Post::withTrashed()->where('author_id',$request->user()->id)->count(),
             'all'=>Post::withTrashed()->count(),
             'published'=>Post::withTrashed()->published()->count(),
             'schedule'=>Post::withTrashed()->schedule()->count(),
