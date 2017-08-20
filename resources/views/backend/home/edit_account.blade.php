@@ -1,17 +1,17 @@
 @extends('backend.layouts.master')
-@section('title','Edit User')
+@section('title','Edit Account')
 @section('content')
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-         Blog<small>Edit User</small>
+         Blog<small>Edit Account</small>
       </h1>
       <ol class="breadcrumb">
           <li ><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li><a href="/backend/blog">Blog</a></li>
-        <li class="active">Edit user</li>
+        <li class="active">Edit Account</li>
       </ol>
     </section>
 
@@ -19,11 +19,11 @@
     <section class="content">
        {!! Form::model($user, [
                   'method' => 'PUT',
-                  'route'  => ['backend.user.update', $user->id]
+                  'url'  => ['/update-account'] 
               ]) !!}
         <div class="row">
-         
-         @include('backend.user.includes.form')       
+         <!--$editAccount in file:backend/home/edit_account, for update info without Role-->
+         @include('backend.user.includes.form',['editAccount'=>'true'])       
             </div>
         {!! Form::close() !!}    
         </div>

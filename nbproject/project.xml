@@ -6,6 +6,7 @@
             <name>laravel_wordpress_cms_clone</name>
         </data>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>endif</word>
             <word>endrole</word>
             <word>endsection</word>
         </spellchecker-wordlist>

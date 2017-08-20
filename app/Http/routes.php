@@ -36,6 +36,8 @@ Route::get('/author/{author}',[
 Route::auth();
 
 Route::get('/home', 'backend\HomeController@index');
+Route::get('/edit-account','backend\HomeController@edit');
+Route::put('/update-account','backend\HomeController@update');
 
 Route::resource('/backend/blog','backend\BlogController');
 

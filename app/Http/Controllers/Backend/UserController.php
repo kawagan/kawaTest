@@ -20,6 +20,9 @@ class UserController extends BackendController
         $userCount=User::count();
         
         $currentUser=auth()->user()->id;
+        
+        // Role
+        
 
         return  view('backend.user.index',compact('users','userCount','currentUser'));
     }
@@ -37,10 +40,15 @@ class UserController extends BackendController
          -$request['password']=  bcrypt($request->input('password'));
          - i have made "setPasswordAttribute function" in class User
          */
-        User::create($request->all());
-      
+        $user=User::create($request->all());
+        
+        $user->attachRole($request->input('role'));
+        
         session()->push('m','success');
         session()->push('m','The user has created successfully');
+        
+        //Note: when we add new column in form and database should be add it in 'protected $fillable'
+        // this is perfect to work stroing and update data
         
         return redirect('/backend/user');
     }
@@ -62,6 +70,12 @@ class UserController extends BackendController
         }else{
             User::findOrFail($id)->update($request->except('password'));
         }
+        
+        $user=User::findOrFail($id);
+       
+        $user->detachRole($user->role); //or $user->detachRoles();
+        
+        $user->attachRole($request->input('role'));
         
         
         session()->push('m','success');

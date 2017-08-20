@@ -27,7 +27,9 @@ class UserStoreRequest extends Request
         return [
             "name"=>"required",
             "email"=>"required|email|unique:users,email",
-            "password"=>"required|confirmed"
+            "password"=>"required|confirmed",
+            "role"=>"required",
+            "slug"=>"required|unique:users"
         ];
        
     }

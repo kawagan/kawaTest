@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UserUpdateRequest extends Request
+class UserUpdateAccountRequest extends Request
 {
     
     public function authorize()
@@ -18,8 +18,10 @@ class UserUpdateRequest extends Request
     {
         return [
             "name"=>"required",
-            "email"=>"required|email|unique:users,email,".$this->route('user'),
-            "password"=>"required_with:password_confirmation|confirmed"
+            "email"=>"required|email|unique:users,email,".auth()->user()->id,
+            "password"=>"required_with:password_confirmation|confirmed",
+            "role"=>"required",
+            "slug"=>"required|unique:users,slug,".auth()->user()->id
         ];
     }
 }

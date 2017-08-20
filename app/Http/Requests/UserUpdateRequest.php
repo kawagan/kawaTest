@@ -19,7 +19,9 @@ class UserUpdateRequest extends Request
         return [
             "name"=>"required",
             "email"=>"required|email|unique:users,email,".$this->route('user'),
-            "password"=>"required_with:password_confirmation|confirmed"
+            "password"=>"required_with:password_confirmation|confirmed",
+            "role"=>"required",
+            "slug"=>"required|unique:users,slug,".$this->route('user')
         ];
     }
 }

@@ -104,6 +104,7 @@ class BlogController extends BackendController
     
     public function store(Postrequest $request)
     {
+        //Note::
         $data = $this->handleImage($request);
 
         $request->user()->posts()->create($data);

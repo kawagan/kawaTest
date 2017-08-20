@@ -14,7 +14,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','slug','bio'
+        //when we add new column in form and database should be add it here
     ];
 
     /**

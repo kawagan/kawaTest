@@ -65,7 +65,7 @@
                                 
                             <td>{{$user->name}} <span class="label label-primary">{{($user->id==$currentUser)?' current user':''}}</span></td>
                             <td>{{$user->email}}</td>
-                            <td>-</td>
+                            <td>{{$user->roles->first()->display_name}}</td>
                             <td>{{$user->posts->count()}}</td>
                            
                         </tr>
